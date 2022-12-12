@@ -37,15 +37,28 @@ function inciarCronometro(){
 
 function inciarTiempo(duracion, componente){
     interval = setInterval(() => {
-        if (duracion == 0) {
+        if (duracion === 0) {
             componente.innerHTML="Se acabo el tiempo";
 
             clearInterval(interval);
 
             loadQuestions()
         }else{
-            duracion = duracion<10 ? "0" + duracion:duracion--;
+            duracion = duracion<10 ? "0" + duracion:duracion;
+            componente.textContent = "00:" + duracion;
+            duracion--;
         }
+    }, 1000)
+}
+function loadQuestions(){
+    inciarCronometro()
+    if(preguntas.length>0){
+        indice_aleatorio = Math.floor(Math.random() * preguntas.length);
+        
+        pregunta_txt = "";
 
-    }, 1000);
+        pregunta_txt += '<p class="pregunta">' + preguntas[indice_aleatorio].pregunta+'</p>';
+
+        pregunta_txt += '<button id="opcion0" class="botonTrivia" onclick="verificarRespuestaCorrecta(1, '+preguntas[indice_aleatorio].correcta+')">'+preguntas[indice_aleatorio].respuesta[0]+'</button>';
+    }
 }
