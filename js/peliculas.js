@@ -21,10 +21,11 @@ var indice_aleatorio = 0;
 var pregunta_txt = "";
 var interval;
 
-window.onload = inciar();
+window.onload = iniciar();
 
-function inciar(){
-    if(localStorage.getItem("SCORE") != null){
+function iniciar(){
+    loadQuestions();
+    if (localStorage.getItem("SCORE") != null){
         localStorage.removeItem("SCORE");
     }
 }
@@ -38,27 +39,33 @@ function inciarCronometro(){
 function inciarTiempo(duracion, componente){
     interval = setInterval(() => {
         if (duracion === 0) {
+
             componente.innerHTML="Se acabo el tiempo";
 
             clearInterval(interval);
 
             loadQuestions()
-        }else{
+        }else {
+
             duracion = duracion<10 ? "0" + duracion:duracion;
+            
             componente.textContent = "00:" + duracion;
+
             duracion--;
         }
     }, 1000)
 }
+
 function loadQuestions(){
     inciarCronometro()
     if(preguntas.length>0){
+
         indice_aleatorio = Math.floor(Math.random() * preguntas.length);
         
         pregunta_txt = "";
 
         pregunta_txt += '<p class="pregunta">' + preguntas[indice_aleatorio].pregunta+'</p>';
 
-        pregunta_txt += '<button id="opcion0" class="botonTrivia" onclick="verificarRespuestaCorrecta(1, '+preguntas[indice_aleatorio].correcta+')">'+preguntas[indice_aleatorio].respuesta[0]+'</button>';
+        pregunta_txt += '<button id="opcion0" class="botonTrivia" onclick="verificarRespuestaCorrecta(0, '+ preguntas[indice_aleatorio].correcta + ')">'+ preguntas[indice_aleatorio].respuesta[0]+'</button>';
     }
 }
