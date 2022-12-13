@@ -67,5 +67,35 @@ function loadQuestions(){
         pregunta_txt += '<p class="pregunta">' + preguntas[indice_aleatorio].pregunta+'</p>';
 
         pregunta_txt += '<button id="opcion0" class="botonTrivia" onclick="verificarRespuestaCorrecta(0, '+ preguntas[indice_aleatorio].correcta + ')">'+ preguntas[indice_aleatorio].respuesta[0]+'</button>';
+
+        pregunta_txt += '<button id="opcion1" class="botonTrivia" onclick="verificarRespuestaCorrecta(1, '+ preguntas[indice_aleatorio].correcta + ')">'+ preguntas[indice_aleatorio].respuesta[1]+'</button>';
+
+        pregunta_txt += '<button id="opcion2" class="botonTrivia" onclick="verificarRespuestaCorrecta(2, '+ preguntas[indice_aleatorio].correcta + ')">'+ preguntas[indice_aleatorio].respuesta[2]+'</button>';
+
+        pregunta_txt += '<button id="opcion3" class="botonTrivia" onclick="verificarRespuestaCorrecta(3, '+ preguntas[indice_aleatorio].correcta + ')">'+ preguntas[indice_aleatorio].respuesta[3]+'</button>';
+
+        document.getElementById("pregunta").innerHTML = pregunta_txt;
+
+        preguntas.splice(indice_aleatorio,1);
+
+    } else{
+        window.location.href = "../vistas/resultado.html";
     }
 }
+
+var puntos = 0;
+
+function verificarRespuestaCorrecta (indice, correcta){
+    if ( correcta === indice){
+        puntos = puntos + 5;
+    }
+
+    localStorage.setItem("SCORE", puntos);
+
+    document.getElementById("opcion0").disable = true;
+    document.getElementById("opcion1").disable = true;
+    document.getElementById("opcion2").disable = true;
+    document.getElementById("opcion3").disable = true;
+}
+
+document.getElementById("siguienteTrivia").addEventListener("click",() => {clearInterval(interval), loadQuestions()} );
